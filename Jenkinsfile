@@ -11,7 +11,7 @@ pipeline {
         sh './gradlew assemble'
       }
     }
-    stage('Lint') {
+    stage('Static Analytics') {
       parallel {
         stage('Lint') {
           steps {
@@ -49,7 +49,7 @@ pipeline {
         archiveArtifacts '**/*.apk'
       }
     }
-    stage('print msg') {
+    stage('Notifications') {
       parallel {
         stage('print msg') {
           steps {
@@ -61,6 +61,12 @@ pipeline {
             slackSend(failOnError: true, message: 'From Fish MBP', teamDomain: 'projectnemo1', token: 'v10W4HsJsbGsYvtGf2rJJeGF')
           }
         }
+      }
+    }
+    stage('Test') {
+      steps {
+        sh './gradlew testDebugUnitTest'
+        junit(testResults: 'app/build/test-results/*.xml', allowEmptyResults: true)
       }
     }
   }
