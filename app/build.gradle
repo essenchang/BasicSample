@@ -35,3 +35,51 @@ dependencies {
     testCompile 'junit:junit:' + rootProject.junitVersion;
     testCompile 'org.mockito:mockito-core:' + rootProject.mockitoVersion;
 }
+
+
+apply plugin: 'findbugs'
+apply plugin: 'pmd'
+apply plugin: 'checkstyle'
+
+task findbugs(type: FindBugs) {
+    //toolVersion = "3.0.1"
+    ignoreFailures = true
+    effort = "default"
+    reportLevel = "medium"
+    classes = files("$project.buildDir/intermediates/classes")
+    source = fileTree('src/main/java')
+    classpath = files()
+    reports {
+        xml {
+            destination "build/findbugs.xml"
+        }
+    }
+}
+
+task pmd(type: Pmd) {
+
+    ignoreFailures = true
+    source = fileTree('src/main/java')
+    ruleSetFiles = files("${project.projectDir}/config/pmd/PmdRuleSets.xml")
+    ruleSets = ["java-android"]
+
+    reports {
+        xml {
+            destination "build/pmd.xml"
+        }
+    }
+
+}
+
+task checkstyle(type: Checkstyle) {
+    //toolVersion = "2.0.1"
+    ignoreFailures = true
+    //config= files("$rootProject.projectDir/config/checkstyle/checkstyle.xml")
+    source = fileTree('src/main/java')
+    classpath = files()
+    reports {
+        xml {
+            destination "build/checkstyle-result.xml"
+        }
+    }
+}
