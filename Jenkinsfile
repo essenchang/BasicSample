@@ -1,6 +1,12 @@
 pipeline {
   agent any
   stages {
+    stage('wifi_fish') {
+      steps {
+        sh 'networksetup -setairportpower en0 on'
+        sh 'networksetup -setairportnetwork en0 一分鐘五塊 fishfish'
+      }
+    }
     stage('Compile') {
       steps {
         sh './gradlew compileDebugSources'
@@ -53,6 +59,12 @@ pipeline {
       steps {
         sh './gradlew testDebugUnitTest'
         junit(testResults: 'app/build/test-results/**/*.xml', allowEmptyResults: true)
+      }
+    }
+    stage('wifi_j') {
+      steps {
+        sh 'networksetup -setairportpower en0 on'
+        sh 'networksetup -setairportnetwork en0 oppo_j fishfish'
       }
     }
     stage('Notifications') {
