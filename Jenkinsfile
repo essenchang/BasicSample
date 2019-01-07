@@ -52,7 +52,7 @@ pipeline {
     stage('Test') {
       steps {
         sh './gradlew testDebugUnitTest'
-        junit(testResults: 'app/build/test-results/*.xml', allowEmptyResults: true)
+        junit(testResults: 'app/build/test-results/**/*.xml', allowEmptyResults: true)
       }
     }
     stage('Notifications') {
