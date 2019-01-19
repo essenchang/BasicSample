@@ -1,10 +1,10 @@
 pipeline {
   agent any
   stages {
-    stage('wifi_fish') {
+    stage('wifi_nbflex') {
       steps {
-        sh 'networksetup -setairportpower en0 on'
-        sh 'networksetup -setairportnetwork en0 一分鐘五塊 fishfish'
+        sh 'networksetup -setairportpower en1 on'
+        sh 'networksetup -setairportnetwork en1 NBFLEX $PWNBFLEX'
       }
     }
     stage('Compile') {
@@ -61,12 +61,6 @@ pipeline {
         junit(testResults: 'app/build/test-results/**/*.xml', allowEmptyResults: true)
       }
     }
-    stage('wifi_j') {
-      steps {
-        sh 'networksetup -setairportpower en0 on'
-        sh 'networksetup -setairportnetwork en0 oppo_j fishfish'
-      }
-    }
     stage('Notifications') {
       parallel {
         stage('print msg') {
@@ -79,6 +73,12 @@ pipeline {
             slackSend(failOnError: true, message: 'From Fish MBP', teamDomain: 'projectnemo1', token: 'v10W4HsJsbGsYvtGf2rJJeGF')
           }
         }
+      }
+    }
+    stage('wifi_AIR190') {
+      steps {
+        sh 'networksetup -setairportpower en1 off'
+        sh 'networksetup -setairportpower en1 on'
       }
     }
   }
