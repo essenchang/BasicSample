@@ -32,8 +32,8 @@ android {
 
 dependencies {
     // Unit testing dependencies.
-    testCompile 'junit:junit:' + rootProject.junitVersion;
-    testCompile 'org.mockito:mockito-core:' + rootProject.mockitoVersion;
+    testImplementation 'junit:junit:' + rootProject.junitVersion;
+    testImplementation 'org.mockito:mockito-core:' + rootProject.mockitoVersion;
 }
 
 
