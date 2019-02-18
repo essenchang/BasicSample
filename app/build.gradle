@@ -1,3 +1,12 @@
+buildscript {
+    repositories {
+        maven { url 'https://maven.fabric.io/public' }
+    }
+
+    dependencies {
+        classpath 'io.fabric.tools:gradle:1.+'
+    }
+}
 /*
  * Copyright 2015, The Android Open Source Project
  *
@@ -15,6 +24,12 @@
  */
 
 apply plugin: 'com.android.application'
+apply plugin: 'io.fabric'
+
+repositories {
+    maven { url 'https://maven.fabric.io/public' }
+}
+
 apply plugin: 'findbugs'
 apply plugin: 'pmd'
 apply plugin: 'checkstyle'
@@ -43,6 +58,7 @@ dependencies {
     // Unit testing dependencies.
     testImplementation 'junit:junit:' + rootProject.junitVersion;
     testImplementation 'org.mockito:mockito-core:' + rootProject.mockitoVersion;
+    implementation 'com.crashlytics.sdk.android:crashlytics:2.9.9'
 }
 
 task checkStyle(type: Checkstyle) {
