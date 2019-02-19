@@ -77,7 +77,7 @@ pipeline {
 
         emailext mimeType: 'text/html',
         replyTo: 'baikin.fish@gmail.com',
-        subject: ${env.JOB_NAME} - Build# ${env.BUILD_NUMBER} - ${env.BUILD_STATUS},
+        subject: "${env.JOB_NAME} - Build# ${env.BUILD_NUMBER} - ${env.BUILD_STATUS}",
         to: 'essenchang@gmail.com',
         body: 'bodybody'
 
