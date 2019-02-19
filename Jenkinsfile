@@ -116,6 +116,7 @@ pipeline {
 
 
       }
+      /*
       changed {}
       fixed {}
       regression {}
@@ -125,5 +126,6 @@ pipeline {
       unstable {}
       unsuccessful {}
       cleanup {}
+      */
     }
 }
