@@ -65,7 +65,7 @@ pipeline {
 
     stage('email1') {
       steps {
-        mail bcc: '', body: '', cc: '', from: '', replyTo: '', subject: '', to: 'essenchang@gmail.com'
+        mail bcc: '', body: 'BBB', cc: '', from: 'baikin.fish@gmail.com', replyTo: 'baikin.fish@gmail.com', subject: 'AAA', to: 'essenchang@gmail.com'
       }
     }
 
