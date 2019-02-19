@@ -79,7 +79,8 @@ pipeline {
         replyTo: 'baikin.fish@gmail.com',
         subject: "${env.JOB_NAME} - Build# ${env.BUILD_NUMBER} - ${env.BUILD_STATUS}",
         to: 'essenchang@gmail.com',
-        body: 'bodybody'
+        body: 'bodybody',
+        recipientProviders: [developers()]
 
       }
     }
