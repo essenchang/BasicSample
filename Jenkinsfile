@@ -13,6 +13,40 @@ pipeline {
       }
     }
 
+    stage('Static Analytics') {
+      parallel {
+        stage('Lint') {
+          steps {
+            sh './gradlew app:lint'
+            androidLint()
+          }
+        }
+        stage('checkstyle') {
+          steps {
+            sh './gradlew app:checkstyle'
+            checkstyle()
+          }
+        }
+        stage('pmd') {
+          steps {
+            sh './gradlew app:pmd'
+            pmd()
+          }
+        }
+        stage('findbugs') {
+          steps {
+            sh './gradlew app:findbugs'
+            findbugs()
+          }
+        }
+        stage('scan workspace') {
+          steps {
+            openTasks(ignoreCase: true, high: 'bug', normal: 'todo')
+          }
+        }
+      }
+    }
+
     stage('fabric') {
       steps {
         fabric apiKey: '4187a95331ec5371aa2c71c73b09b012d2274803',
