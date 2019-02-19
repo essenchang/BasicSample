@@ -63,7 +63,14 @@ pipeline {
       }
     }
 
-    stage('email') {
+    stage('email1') {
+      steps {
+        mail bcc: '', body: '', cc: '', from: '', replyTo: '', subject: '', to: 'essenchang@gmail.com'
+      }
+    }
+
+/*
+    stage('email2') {
       steps {
         emailext attachLog: true, body: '''項目名稱: $PROJECT_NAME<br/>
 
@@ -98,6 +105,7 @@ pipeline {
         變更集: ${JELLY_SCRIPT,template="html"}<br/><hr/>''', compressLog: true, subject: 'FFFF', to: 'essenchang@gmail.com'
       }
     }
+*/
 
   }
 }
