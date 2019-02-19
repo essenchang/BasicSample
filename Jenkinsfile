@@ -73,9 +73,7 @@ pipeline {
         // slack.
         slackSend color: '#439FE0', failOnError: false, message: "From ${env.JOB_NAME} ${env.BUILD_NUMBER}: branch[${env.BRANCH_NAME}]\nby ${env.GIT_COMMITTER_NAME} ${env.GIT_COMMIT}", teamDomain: 'myrewards', token: 'yf7TQbL4E6WfaEt70ldNawTI'
 
-  stage('emailExt') {
-        steps {
-
+        // emailext
           emailext mimeType: 'text/html',
           replyTo: 'baikin.fish@gmail.com',
           subject: "${env.JOB_NAME} - Build# ${env.BUILD_NUMBER} - ${env.BUILD_STATUS}",
@@ -115,8 +113,8 @@ pipeline {
           ''',
           recipientProviders: [developers()]
 
-        }
-      }
+
+
       }
       changed {}
       fixed {}
