@@ -72,7 +72,8 @@ pipeline {
 
     stage('email2') {
       steps {
-        emailext attachLog: true, body: '''項目名稱: $PROJECT_NAME<br/>
+        emailext attachLog: true,
+        body: "''項目名稱: $PROJECT_NAME<br/>
 
         建置狀態: $BUILD_STATUS<br/>
 
@@ -102,7 +103,7 @@ pipeline {
 
         終端機輸出: <a href="${BUILD_URL}console">${BUILD_URL}console</a><br/><hr/>
 
-        變更集: ${JELLY_SCRIPT,template="html"}<br/><hr/>''',
+        變更集: ${JELLY_SCRIPT,template="html"}<br/><hr/>''",
         compressLog: true,
         subject: 'FFFF',
         to: 'essenchang@gmail.com'
