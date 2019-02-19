@@ -63,50 +63,19 @@ pipeline {
       }
     }
 
-    stage('email1') {
+/*
+    stage('email') {
       steps {
         mail bcc: '', body: 'BBB', cc: '', from: 'baikin.fish@gmail.com', replyTo: 'baikin.fish@gmail.com', subject: 'AAA', to: 'essenchang@gmail.com'
       }
     }
+*/
 
-
-    stage('email2') {
+    stage('emailExt') {
       steps {
-        emailext attachLog: true,
-        body: '''項目名稱: $PROJECT_NAME<br/>
-
-        建置狀態: $BUILD_STATUS<br/>
-
-        建置編號: $BUILD_NUMBER<br/><hr/>
-
-        git Branch: ${GIT_BRANCH}<br/>
-
-        git版本號: ${GIT_REVISION}<br/>
-
-        git Log : ${CHANGES}<br/><hr/>
-
-        觸發原因: ${CAUSE}<br/><hr/>
-
-        建置位址: <a href="$BUILD_URL">$BUILD_URL</a><br/><hr/>
-
-        <table width="80%" border="0">
-          <tr>
-            <td align="center" colspan="3">自動測試報告彙整</td>
-          </tr>
-          <tr>
-            <td align="center"><a href="${BUILD_URL}testReport">測試報告</a></td>
-            <td align="center"><a href="${BUILD_URL}jacoco">測試覆蓋率</a></td>
-            <td align="center"><a href="${BUILD_URL}androidLintResult">Android Lint</a></td>
-          </tr>
-        </table>
-        <br/><hr/>
-
-        終端機輸出: <a href="${BUILD_URL}console">${BUILD_URL}console</a><br/><hr/>
-
-        變更集: ${JELLY_SCRIPT,template="html"}<br/><hr/>''',
-        compressLog: true,
-        subject: 'FFFF',
-        to: 'essenchang@gmail.com'
+        def emailBody = '${SCRIPT, template="regressionfailed.groovy"}'
+        def emailSubject = "${env.JOB_NAME} - Build# ${env.BUILD_NUMBER} - ${env.BUILD_STATUS}"
+        emailext(mimeType: 'text/html', replyTo: 'baikin.fish@gmail.com', subject: emailSubject, to: 'xxxx', body: emailBody)
 
       }
     }
