@@ -70,83 +70,102 @@ pipeline {
   post {
       // 下面這些狀態的內容不得為空, 否則會發生錯誤.
 
-      always {
-        echo "post always"
-        // slack.
-        slackSend color: '#439FE0', failOnError: false, message: "From ${env.JOB_NAME} ${env.BUILD_NUMBER}: branch[${env.BRANCH_NAME}]\nby ${env.GIT_COMMITTER_NAME} ${env.GIT_COMMIT}", teamDomain: 'myrewards', token: 'yf7TQbL4E6WfaEt70ldNawTI'
-
-      }
-
-
       failure {
         echo "post failure"
-        // emailext
-          emailext mimeType: 'text/html',
-          replyTo: 'baikin.fish@gmail.com',
-          subject: "${env.JOB_NAME} - Build# ${env.BUILD_NUMBER} - ${env.BUILD_STATUS}",
-          to: 'essenchang@gmail.com',
-          body: '''
-          項目名稱: $PROJECT_NAME<br/>
+        sendNotification()
+      }
 
-          建置狀態: $BUILD_STATUS<br/>
+      unstable {
+        echo "post unstable"
+        sendNotification()
+      }
 
-          建置編號: $BUILD_NUMBER<br/><hr/>
+      fixed {
+        echo "post fixed"
+        sendNotification()
+      }
 
-          git Branch: ${GIT_BRANCH}<br/>
-
-          git版本號: ${GIT_REVISION}<br/>
-
-          git Log : ${CHANGES}<br/><hr/>
-
-          觸發原因: ${CAUSE}<br/><hr/>
-
-          建置位址: <a href="$BUILD_URL">$BUILD_URL</a><br/><hr/>
-
-          <table width="80%" border="0">
-            <tr>
-              <td align="center" colspan="3">自動測試報告彙整</td>
-            </tr>
-            <tr>
-              <td align="center"><a href="${BUILD_URL}testReport">測試報告</a></td>
-              <td align="center"><a href="${BUILD_URL}jacoco">測試覆蓋率</a></td>
-              <td align="center"><a href="${BUILD_URL}androidLintResult">Android Lint</a></td>
-            </tr>
-          </table>
-          <br/><hr/>
-
-          終端機輸出: <a href="${BUILD_URL}console">${BUILD_URL}console</a><br/><hr/>
-
-          變更集: ${JELLY_SCRIPT,template="html"}<br/><hr/>
-          ''',
-          recipientProviders: [developers()]
-
+      always {
+        echo "post always"
       }
 
       changed {
         echo "post changed"
       }
-      fixed {
-        echo "post fixed"
-      }
+
       regression {
         echo "post regression"
       }
+
       aborted {
         echo "post aborted"
       }
+
       success {
         echo "post success"
       }
-      unstable {
-        echo "post unstable"
-      }
+
       unsuccessful {
         echo "post unsuccessful"
       }
+
       cleanup {
         echo "post cleanup"
       }
 
 
+    }
+
+    def sendNotification() {
+      sendSlack()
+      sendEmailExt()
+    }
+
+    def sendSlack() {
+      // slack.
+      slackSend color: '#439FE0', failOnError: false, message: "From ${env.JOB_NAME} ${env.BUILD_NUMBER}: branch[${env.BRANCH_NAME}]\nby ${env.GIT_COMMITTER_NAME} ${env.GIT_COMMIT}", teamDomain: 'myrewards', token: 'yf7TQbL4E6WfaEt70ldNawTI'
+
+    }
+
+    def sendEmailExt() {
+      // emailext
+              emailext mimeType: 'text/html',
+              replyTo: 'baikin.fish@gmail.com',
+              subject: "${env.JOB_NAME} - Build# ${env.BUILD_NUMBER} - ${env.BUILD_STATUS}",
+              to: 'essenchang@gmail.com',
+              body: '''
+              項目名稱: $PROJECT_NAME<br/>
+
+              建置狀態: $BUILD_STATUS<br/>
+
+              建置編號: $BUILD_NUMBER<br/><hr/>
+
+              git Branch: ${GIT_BRANCH}<br/>
+
+              git版本號: ${GIT_REVISION}<br/>
+
+              git Log : ${CHANGES}<br/><hr/>
+
+              觸發原因: ${CAUSE}<br/><hr/>
+
+              建置位址: <a href="$BUILD_URL">$BUILD_URL</a><br/><hr/>
+
+              <table width="80%" border="0">
+                <tr>
+                  <td align="center" colspan="3">自動測試報告彙整</td>
+                </tr>
+                <tr>
+                  <td align="center"><a href="${BUILD_URL}testReport">測試報告</a></td>
+                  <td align="center"><a href="${BUILD_URL}jacoco">測試覆蓋率</a></td>
+                  <td align="center"><a href="${BUILD_URL}androidLintResult">Android Lint</a></td>
+                </tr>
+              </table>
+              <br/><hr/>
+
+              終端機輸出: <a href="${BUILD_URL}console">${BUILD_URL}console</a><br/><hr/>
+
+              變更集: ${JELLY_SCRIPT,template="html"}<br/><hr/>
+              ''',
+              recipientProviders: [developers()]
     }
 }
