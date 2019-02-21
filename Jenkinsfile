@@ -120,11 +120,13 @@ pipeline {
 }
 
 def sendNotification(def status) {
+  echo "sendNotification"
   sendSlack(status)
   sendEmailExt(status)
 }
 
 def sendSlack(def status) {
+  echo "sendSlack"
   // slack.
   slackSend color: getColorByStatus(), failOnError: false, message: "${env.JOB_NAME} - Build # ${env.BUILD_NUMBER}\n${CHANGES}", teamDomain: 'myrewards', token: 'yf7TQbL4E6WfaEt70ldNawTI'
 }
@@ -141,6 +143,7 @@ def getColorByStatus() {
 }
 
 def sendEmailExt(def status) {
+  echo "sendEmailExt"
   // emailext
   emailext mimeType: 'text/html',
   replyTo: 'baikin.fish@gmail.com',
