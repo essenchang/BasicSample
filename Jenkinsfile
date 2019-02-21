@@ -132,7 +132,7 @@ def sendSlack(def status) {
 }
 
 def getColorByStatus() {
-  echo "getColorByStatus $BUILD_STATUS"
+  echo 'getColorByStatus' + $BUILD_STATUS
   if($BUILD_STATUS=='SUCCESS') {
     return '#439FE0'
   } else if($BUILD_STATUS=='FAILURE') {
