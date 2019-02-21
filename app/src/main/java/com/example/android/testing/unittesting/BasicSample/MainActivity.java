@@ -38,7 +38,7 @@ import java.util.Calendar;
 public class MainActivity extends Activity {
 
     // Logger for this class.
-    private static final String TAG = "MainActivity";
+    aaprivate static final String TAG = "MainActivity";
 
     // The helper that manages writing to SharedPreferences.
     private SharedPreferencesHelper mSharedPreferencesHelper;
