@@ -128,7 +128,7 @@ def sendNotification(def status) {
 def sendSlack(def status) {
   echo "sendSlack"
   // slack.
-  slackSend color: getColorByStatus(), failOnError: false, message: "${env.JOB_NAME} - Build # ${env.BUILD_NUMBER}\n${CHANGES}", teamDomain: 'myrewards', token: 'yf7TQbL4E6WfaEt70ldNawTI'
+  slackSend color: getColorByStatus(status), failOnError: false, message: "${env.JOB_NAME} - Build # ${env.BUILD_NUMBER}\n${CHANGES}", teamDomain: 'myrewards', token: 'yf7TQbL4E6WfaEt70ldNawTI'
 }
 
 def getColorByStatus(def status) {
