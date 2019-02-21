@@ -116,56 +116,58 @@ pipeline {
 
     }
 
-    def sendNotification() {
-      sendSlack()
-      sendEmailExt()
-    }
 
-    def sendSlack() {
-      // slack.
-      slackSend color: '#439FE0', failOnError: false, message: "From ${env.JOB_NAME} ${env.BUILD_NUMBER}: branch[${env.BRANCH_NAME}]\nby ${env.GIT_COMMITTER_NAME} ${env.GIT_COMMIT}", teamDomain: 'myrewards', token: 'yf7TQbL4E6WfaEt70ldNawTI'
+}
 
-    }
+def sendNotification() {
+  sendSlack()
+  sendEmailExt()
+}
 
-    def sendEmailExt() {
-      // emailext
-              emailext mimeType: 'text/html',
-              replyTo: 'baikin.fish@gmail.com',
-              subject: "${env.JOB_NAME} - Build# ${env.BUILD_NUMBER} - ${env.BUILD_STATUS}",
-              to: 'essenchang@gmail.com',
-              body: '''
-              項目名稱: $PROJECT_NAME<br/>
+def sendSlack() {
+  // slack.
+  slackSend color: '#439FE0', failOnError: false, message: "From ${env.JOB_NAME} ${env.BUILD_NUMBER}: branch[${env.BRANCH_NAME}]\nby ${env.GIT_COMMITTER_NAME} ${env.GIT_COMMIT}", teamDomain: 'myrewards', token: 'yf7TQbL4E6WfaEt70ldNawTI'
 
-              建置狀態: $BUILD_STATUS<br/>
+}
 
-              建置編號: $BUILD_NUMBER<br/><hr/>
+def sendEmailExt() {
+  // emailext
+          emailext mimeType: 'text/html',
+          replyTo: 'baikin.fish@gmail.com',
+          subject: "${env.JOB_NAME} - Build# ${env.BUILD_NUMBER} - ${env.BUILD_STATUS}",
+          to: 'essenchang@gmail.com',
+          body: '''
+          項目名稱: $PROJECT_NAME<br/>
 
-              git Branch: ${GIT_BRANCH}<br/>
+          建置狀態: $BUILD_STATUS<br/>
 
-              git版本號: ${GIT_REVISION}<br/>
+          建置編號: $BUILD_NUMBER<br/><hr/>
 
-              git Log : ${CHANGES}<br/><hr/>
+          git Branch: ${GIT_BRANCH}<br/>
 
-              觸發原因: ${CAUSE}<br/><hr/>
+          git版本號: ${GIT_REVISION}<br/>
 
-              建置位址: <a href="$BUILD_URL">$BUILD_URL</a><br/><hr/>
+          git Log : ${CHANGES}<br/><hr/>
 
-              <table width="80%" border="0">
-                <tr>
-                  <td align="center" colspan="3">自動測試報告彙整</td>
-                </tr>
-                <tr>
-                  <td align="center"><a href="${BUILD_URL}testReport">測試報告</a></td>
-                  <td align="center"><a href="${BUILD_URL}jacoco">測試覆蓋率</a></td>
-                  <td align="center"><a href="${BUILD_URL}androidLintResult">Android Lint</a></td>
-                </tr>
-              </table>
-              <br/><hr/>
+          觸發原因: ${CAUSE}<br/><hr/>
 
-              終端機輸出: <a href="${BUILD_URL}console">${BUILD_URL}console</a><br/><hr/>
+          建置位址: <a href="$BUILD_URL">$BUILD_URL</a><br/><hr/>
 
-              變更集: ${JELLY_SCRIPT,template="html"}<br/><hr/>
-              ''',
-              recipientProviders: [developers()]
-    }
+          <table width="80%" border="0">
+            <tr>
+              <td align="center" colspan="3">自動測試報告彙整</td>
+            </tr>
+            <tr>
+              <td align="center"><a href="${BUILD_URL}testReport">測試報告</a></td>
+              <td align="center"><a href="${BUILD_URL}jacoco">測試覆蓋率</a></td>
+              <td align="center"><a href="${BUILD_URL}androidLintResult">Android Lint</a></td>
+            </tr>
+          </table>
+          <br/><hr/>
+
+          終端機輸出: <a href="${BUILD_URL}console">${BUILD_URL}console</a><br/><hr/>
+
+          變更集: ${JELLY_SCRIPT,template="html"}<br/><hr/>
+          ''',
+          recipientProviders: [developers()]
 }
