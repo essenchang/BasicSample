@@ -68,18 +68,18 @@ pipeline {
   }
 
   post {
-      always {
+      // 下面這些狀態的內容不得為空, 否則會發生錯誤.
 
+      always {
+        echo "post always"
         // slack.
         slackSend color: '#439FE0', failOnError: false, message: "From ${env.JOB_NAME} ${env.BUILD_NUMBER}: branch[${env.BRANCH_NAME}]\nby ${env.GIT_COMMITTER_NAME} ${env.GIT_COMMIT}", teamDomain: 'myrewards', token: 'yf7TQbL4E6WfaEt70ldNawTI'
 
       }
 
-      changed {}
-      fixed {}
-      regression {}
-      aborted {}
+
       failure {
+        echo "post failure"
         // emailext
           emailext mimeType: 'text/html',
           replyTo: 'baikin.fish@gmail.com',
@@ -121,10 +121,32 @@ pipeline {
           recipientProviders: [developers()]
 
       }
-      success {}
-      unstable {}
-      unsuccessful {}
-      cleanup {}
+
+      changed {
+        echo "post changed"
+      }
+      fixed {
+        echo "post fixed"
+      }
+      regression {
+        echo "post regression"
+      }
+      aborted {
+        echo "post aborted"
+      }
+      success {
+        echo "post success"
+      }
+      unstable {
+        echo "post unstable"
+      }
+      unsuccessful {
+        echo "post unsuccessful"
+      }
+      cleanup {
+        echo "post cleanup"
+      }
+
 
     }
 }
