@@ -72,17 +72,17 @@ pipeline {
 
       failure {
         echo "post failure"
-        sendNotification()
+        sendNotification("failure")
       }
 
       unstable {
         echo "post unstable"
-        sendNotification()
+        sendNotification("unstable")
       }
 
       fixed {
         echo "post fixed"
-        sendNotification()
+        sendNotification("fixed")
       }
 
       always {
