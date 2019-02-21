@@ -131,13 +131,19 @@ def sendSlack(def status) {
   slackSend color: getColorByStatus(), failOnError: false, message: "${env.JOB_NAME} - Build # ${env.BUILD_NUMBER}\n${CHANGES}", teamDomain: 'myrewards', token: 'yf7TQbL4E6WfaEt70ldNawTI'
 }
 
-def getColorByStatus() {
+def getColorByStatus(def status) {
   echo 'getColorByStatus'
   if($BUILD_STATUS=='SUCCESS') {
     return '#439FE0'
   } else if($BUILD_STATUS=='FAILURE') {
     return '#FF0000'
-  } else {
+  } else if(status=='success'){
+    return '#FFFF00'
+  } else if(status=='failure'){
+    return '#FF00FF'
+  } else if(status=='unstable'){
+    return '#00FFFF'
+  } else if(status=='success'){
     return '#0000FF'
   }
 }
