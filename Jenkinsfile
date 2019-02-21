@@ -73,6 +73,13 @@ pipeline {
         // slack.
         slackSend color: '#439FE0', failOnError: false, message: "From ${env.JOB_NAME} ${env.BUILD_NUMBER}: branch[${env.BRANCH_NAME}]\nby ${env.GIT_COMMITTER_NAME} ${env.GIT_COMMIT}", teamDomain: 'myrewards', token: 'yf7TQbL4E6WfaEt70ldNawTI'
 
+      }
+
+      changed {}
+      fixed {}
+      regression {}
+      aborted {}
+      failure {
         // emailext
           emailext mimeType: 'text/html',
           replyTo: 'baikin.fish@gmail.com',
@@ -113,19 +120,11 @@ pipeline {
           ''',
           recipientProviders: [developers()]
 
-
-
       }
-      /*
-      changed {}
-      fixed {}
-      regression {}
-      aborted {}
-      failure {}
       success {}
       unstable {}
       unsuccessful {}
       cleanup {}
-      */
+
     }
 }
