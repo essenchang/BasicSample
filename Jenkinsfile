@@ -162,7 +162,7 @@ def sendEmailExt() {
 
   建置狀態: <font color="${getColorByStatus()}">$BUILD_STATUS</font><br/>
 
-  建置編號: $BUILD_NUMBER<br/><hr/>
+  建置編號: <font color="${getColorByStatus()}">$BUILD_NUMBER</font><br/><hr/>
 
   git Branch: ${GIT_BRANCH}<br/>
 
