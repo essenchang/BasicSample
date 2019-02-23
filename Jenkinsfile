@@ -87,6 +87,7 @@ pipeline {
 
       always {
         echo "post always"
+        echo "Build completed. currentBuild.result = ${currentBuild.result}"
       }
 
       changed {
@@ -142,19 +143,6 @@ def getColorByStatus(def status) {
   } else {
     return '#FF00FF'
   }
-  // if($BUILD_STATUS=='SUCCESS') {
-  //   return '#439FE0'
-  // } else if($BUILD_STATUS=='FAILURE') {
-  //   return '#FF0000'
-  // } else if(status=='success'){
-  //   return '#FFFF00'
-  // } else if(status=='failure'){
-  //   return '#FF00FF'
-  // } else if(status=='unstable'){
-  //   return '#00FFFF'
-  // } else if(status=='success'){
-  //   return '#0000FF'
-  // }
 }
 
 def sendEmailExt(def status) {
