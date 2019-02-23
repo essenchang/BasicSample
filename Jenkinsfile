@@ -130,21 +130,23 @@ def sendNotification() {
 def sendSlack() {
   echo "sendSlack"
   // slack.
-  slackSend color: getColorByStatus(), failOnError: false, message: "${env.JOB_NAME} - Build # ${env.BUILD_NUMBER}\nBUILD_URL ${env.BUILD_URL}\nGIT_COMMIT ${env.GIT_COMMIT}\n", teamDomain: 'myrewards', token: 'yf7TQbL4E6WfaEt70ldNawTI'
+  slackSend color: getColorByStatus(), failOnError: false, message: "${env.JOB_NAME} - Build # ${env.BUILD_NUMBER}\nBUILD_URL:${env.BUILD_URL}\nGIT_COMMIT:${env.GIT_COMMIT}\n", teamDomain: 'myrewards', token: 'yf7TQbL4E6WfaEt70ldNawTI'
 }
 
 def getColorByStatus() {
   echo 'getColorByStatus'
   def status = "${currentBuild.result}";
+  def color = '#696969'
   if(status=='SUCCESS') {
-    return '#1e90ff'
+    color = '#1e90ff'
   } else if(status=='FAILURE'){
-    return '#F400A1'
+    color = '#F400A1'
   } else if(status=='UNSTABLE') {
-    return '#FFEF00'
-  } else {
-    return '#696969'
+    color = '#FFEF00'
   }
+
+  echo 'status:'+status+' ,color:'+color
+  return color
 }
 
 def sendEmailExt() {
