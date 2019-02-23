@@ -134,7 +134,8 @@ def sendSlack(def status) {
 
 def getColorByStatus(def status) {
   echo 'getColorByStatus'
-  if(${currentBuild.result}=='SUCCESS') {
+  status = "${currentBuild.result}";
+  if(status=='SUCCESS') {
     return '#439FE0'
   } else if(status=='FAILURE'){
     return '#FF0000'
