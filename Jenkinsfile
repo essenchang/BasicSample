@@ -135,14 +135,13 @@ def sendSlack() {
 
 def getColorByStatus() {
   echo 'getColorByStatus'
+  // 建置成功時 status = null.
   def status = "${currentBuild.result}";
-  def color = '#696969'
-  if(status=='SUCCESS') {
-    color = '#1e90ff'
-  } else if(status=='FAILURE'){
-    color = '#F400A1'
+  def color = '#1e90ff' // green
+  if(status=='FAILURE'){
+    color = '#F400A1' // red
   } else if(status=='UNSTABLE') {
-    color = '#FFEF00'
+    color = '#FFEF00' // yellow
   }
 
   echo 'status:'+status+' ,color:'+color
@@ -151,7 +150,6 @@ def getColorByStatus() {
 
 def sendEmailExt() {
   echo "sendEmailExt"
-  def textColor = getColorByStatus()
   // body 裡的變數是 eamilext plugin 才能用的, 不要拿去別的地方用. fish.
   // emailext
   emailext mimeType: 'text/html',
@@ -161,7 +159,7 @@ def sendEmailExt() {
   body: '''
   項目名稱: $PROJECT_NAME<br/>
 
-  建置狀態: <font color="$textColor">$BUILD_STATUS</font><br/>
+  建置狀態: $BUILD_STATUS<br/>
 
   建置編號: $BUILD_NUMBER<br/><hr/>
 
