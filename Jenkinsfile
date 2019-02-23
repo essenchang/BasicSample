@@ -133,19 +133,28 @@ def sendSlack(def status) {
 
 def getColorByStatus(def status) {
   echo 'getColorByStatus'
-  if($BUILD_STATUS=='SUCCESS') {
+  if(status=='success') {
     return '#439FE0'
-  } else if($BUILD_STATUS=='FAILURE') {
-    return '#FF0000'
-  } else if(status=='success'){
-    return '#FFFF00'
   } else if(status=='failure'){
-    return '#FF00FF'
-  } else if(status=='unstable'){
-    return '#00FFFF'
-  } else if(status=='success'){
+    return '#FF0000'
+  } else if(status=='unstable') {
     return '#0000FF'
+  } else {
+    return '#FF00FF'
   }
+  // if($BUILD_STATUS=='SUCCESS') {
+  //   return '#439FE0'
+  // } else if($BUILD_STATUS=='FAILURE') {
+  //   return '#FF0000'
+  // } else if(status=='success'){
+  //   return '#FFFF00'
+  // } else if(status=='failure'){
+  //   return '#FF00FF'
+  // } else if(status=='unstable'){
+  //   return '#00FFFF'
+  // } else if(status=='success'){
+  //   return '#0000FF'
+  // }
 }
 
 def sendEmailExt(def status) {
