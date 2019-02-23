@@ -131,7 +131,7 @@ def sendNotification() {
 def sendSlack() {
   echo "sendSlack"
   // slack.
-  slackSend color: getColorByStatus(), failOnError: false, message: "${env.JOB_NAME} - Build # ${env.BUILD_NUMBER}\nBUILD_URL:${env.BUILD_URL}\nGIT_COMMIT:${env.GIT_COMMIT}\n", teamDomain: 'myrewards', token: 'yf7TQbL4E6WfaEt70ldNawTI'
+  slackSend color: getColorByStatus(), failOnError: false, message: "${env.JOB_NAME} - Build # ${env.BUILD_NUMBER}\nBUILD_URL:${env.BUILD_URL}\n${getChangeLogs()}\n", teamDomain: 'myrewards', token: 'yf7TQbL4E6WfaEt70ldNawTI'
 }
 
 def getColorByStatus() {
@@ -194,12 +194,17 @@ def sendEmailExt() {
 }
 
 def getChangeLogs() {
+  echo 'getChangeLogs'
+
+  def str = ""
+
   def changeLogSets = currentBuild.changeSets
   for (int i = 0; i < changeLogSets.size(); i++) {
     def entries = changeLogSets[i].items
     for (int j = 0; j < entries.length; j++) {
         def entry = entries[j]
         echo "${entry.commitId} by ${entry.author} on ${new Date(entry.timestamp)}: ${entry.msg}"
+        str = str + "\n[${entry.author}] ${entry.msg}"
         def files = new ArrayList(entry.affectedFiles)
         for (int k = 0; k < files.size(); k++) {
             def file = files[k]
@@ -207,4 +212,6 @@ def getChangeLogs() {
         }
     }
   }
+
+  return str
 }
