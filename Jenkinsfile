@@ -72,22 +72,23 @@ pipeline {
 
       failure {
         echo "post failure"
-        sendNotification()
+        //sendNotification()
       }
 
       unstable {
         echo "post unstable"
-        sendNotification()
+        //sendNotification()
       }
 
       fixed {
         echo "post fixed"
-        sendNotification()
+        //sendNotification()
       }
 
       always {
         echo "post always"
         echo "Build completed. currentBuild.result = ${currentBuild.result}"
+        sendNotification()
       }
 
       changed {
@@ -148,6 +149,7 @@ def getColorByStatus() {
 
 def sendEmailExt() {
   echo "sendEmailExt"
+  def textColor = getColorByStatus()
   // body 裡的變數是 eamilext plugin 才能用的, 不要拿去別的地方用. fish.
   // emailext
   emailext mimeType: 'text/html',
@@ -157,7 +159,7 @@ def sendEmailExt() {
   body: '''
   項目名稱: $PROJECT_NAME<br/>
 
-  建置狀態: $BUILD_STATUS<br/>
+  建置狀態: <font color="$textColor">$BUILD_STATUS</font><br/>
 
   建置編號: $BUILD_NUMBER<br/><hr/>
 
