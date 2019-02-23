@@ -160,7 +160,7 @@ def sendEmailExt() {
   body: '''
   項目名稱: $PROJECT_NAME<br/>
 
-  建置狀態: $BUILD_STATUS<br/>
+  建置狀態: <font color="${getColorByStatus()}">$BUILD_STATUS</font><br/>
 
   建置編號: $BUILD_NUMBER<br/><hr/>
 
