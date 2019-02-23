@@ -136,13 +136,13 @@ def getColorByStatus() {
   echo 'getColorByStatus'
   def status = "${currentBuild.result}";
   if(status=='SUCCESS') {
-    return '#439FE0'
+    return '#1e90ff'
   } else if(status=='FAILURE'){
-    return '#FF0000'
+    return '#F400A1'
   } else if(status=='UNSTABLE') {
-    return '#0000FF'
+    return '#FFEF00'
   } else {
-    return '#FF00FF'
+    return '#696969'
   }
 }
 
