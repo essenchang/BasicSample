@@ -72,17 +72,17 @@ pipeline {
 
       failure {
         echo "post failure"
-        sendNotification("failure")
+        sendNotification()
       }
 
       unstable {
         echo "post unstable"
-        sendNotification("unstable")
+        sendNotification()
       }
 
       fixed {
         echo "post fixed"
-        sendNotification("fixed")
+        sendNotification()
       }
 
       always {
@@ -120,21 +120,21 @@ pipeline {
 
 }
 
-def sendNotification(def status) {
+def sendNotification() {
   echo "sendNotification"
-  sendSlack(status)
-  sendEmailExt(status)
+  sendSlack()
+  sendEmailExt()
 }
 
-def sendSlack(def status) {
+def sendSlack() {
   echo "sendSlack"
   // slack.
-  slackSend color: getColorByStatus(status), failOnError: false, message: "${env.JOB_NAME} - Build # ${env.BUILD_NUMBER}\nBUILD_URL ${env.BUILD_URL}\nGIT_COMMIT ${env.GIT_COMMIT}\n", teamDomain: 'myrewards', token: 'yf7TQbL4E6WfaEt70ldNawTI'
+  slackSend color: getColorByStatus(), failOnError: false, message: "${env.JOB_NAME} - Build # ${env.BUILD_NUMBER}\nBUILD_URL ${env.BUILD_URL}\nGIT_COMMIT ${env.GIT_COMMIT}\n", teamDomain: 'myrewards', token: 'yf7TQbL4E6WfaEt70ldNawTI'
 }
 
-def getColorByStatus(def status) {
+def getColorByStatus() {
   echo 'getColorByStatus'
-  status = "${currentBuild.result}";
+  def status = "${currentBuild.result}";
   if(status=='SUCCESS') {
     return '#439FE0'
   } else if(status=='FAILURE'){
