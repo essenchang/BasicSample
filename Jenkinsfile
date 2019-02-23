@@ -146,12 +146,13 @@ def getColorByStatus() {
   }
 }
 
-def sendEmailExt(def status) {
+def sendEmailExt() {
   echo "sendEmailExt"
+  // body 裡的變數是 eamilext plugin 才能用的, 不要拿去別的地方用. fish.
   // emailext
   emailext mimeType: 'text/html',
   replyTo: 'baikin.fish@gmail.com',
-  subject: "${env.JOB_NAME} - Build# ${env.BUILD_NUMBER} - ${env.BUILD_STATUS}",
+  subject: "${env.JOB_NAME} - Build# ${env.BUILD_NUMBER} - ${currentBuild.result}",
   to: 'essenchang@gmail.com',
   body: '''
   項目名稱: $PROJECT_NAME<br/>
