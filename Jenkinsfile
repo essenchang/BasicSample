@@ -115,30 +115,17 @@ pipeline {
       cleanup {
         echo "post cleanup"
       }
-
-
     }
-
-
 }
 
-def sendNotification() {
-  echo "sendNotification"
-  sendSlack()
-  sendEmailExt()
-}
-
-def sendSlack() {
-  echo "sendSlack"
-  // slack.
-  slackSend color: getColorByStatus(), failOnError: false, message: "${env.JOB_NAME} - Build # ${env.BUILD_NUMBER}\nBUILD_URL:${env.BUILD_URL}\n${getChangeLogs()}\n", teamDomain: 'myrewards', token: 'yf7TQbL4E6WfaEt70ldNawTI'
-}
-
+/*
+* 依照建置狀態取得顏色
+*/
 def getColorByStatus() {
   echo 'getColorByStatus'
   // 建置成功時 status = null.
   def status = "${currentBuild.result}";
-  def color = '#1e90ff' // green
+  def color = '#1e90ff' // blue
   if(status=='FAILURE'){
     color = '#F400A1' // red
   } else if(status=='UNSTABLE') {
@@ -149,6 +136,54 @@ def getColorByStatus() {
   return color
 }
 
+/*
+* 取得 git commit logs.
+*/
+def getChangeLogs() {
+  //echo 'getChangeLogs'
+
+  def str = ""
+
+  def changeLogSets = currentBuild.changeSets
+  for (int i = 0; i < changeLogSets.size(); i++) {
+    def entries = changeLogSets[i].items
+    for (int j = 0; j < entries.length; j++) {
+        def entry = entries[j]
+        //echo "${entry.commitId} by ${entry.author} on ${new Date(entry.timestamp)}: ${entry.msg}"
+        str = str + "\n[${entry.author}] ${entry.msg}"
+        // 下面是有變更的檔案之資訊.
+        // def files = new ArrayList(entry.affectedFiles)
+        // for (int k = 0; k < files.size(); k++) {
+        //     def file = files[k]
+        //     echo "  ${file.editType.name} ${file.path}"
+        // }
+    }
+  }
+
+  return str
+}
+
+/*
+* 發通知
+*/
+def sendNotification() {
+  echo "sendNotification"
+  sendSlack()
+  sendEmailExt()
+}
+
+/*
+* 發 slack 訊息
+*/
+def sendSlack() {
+  echo "sendSlack"
+  // slack.
+  slackSend color: getColorByStatus(), failOnError: false, message: "${env.JOB_NAME} - Build # ${env.BUILD_NUMBER}\nBUILD_URL:${env.BUILD_URL}\n${getChangeLogs()}\n", teamDomain: 'myrewards', token: 'yf7TQbL4E6WfaEt70ldNawTI'
+}
+
+/*
+* 寄增強型 email
+*/
 def sendEmailExt() {
   echo "sendEmailExt"
   // body 裡的變數是 eamilext plugin 才能用的, 不要拿去別的地方用. fish.
@@ -191,27 +226,4 @@ def sendEmailExt() {
   變更集: ${JELLY_SCRIPT,template="html"}<br/><hr/>
   ''',
   recipientProviders: [developers()]
-}
-
-def getChangeLogs() {
-  echo 'getChangeLogs'
-
-  def str = ""
-
-  def changeLogSets = currentBuild.changeSets
-  for (int i = 0; i < changeLogSets.size(); i++) {
-    def entries = changeLogSets[i].items
-    for (int j = 0; j < entries.length; j++) {
-        def entry = entries[j]
-        echo "${entry.commitId} by ${entry.author} on ${new Date(entry.timestamp)}: ${entry.msg}"
-        str = str + "\n[${entry.author}] ${entry.msg}"
-        def files = new ArrayList(entry.affectedFiles)
-        for (int k = 0; k < files.size(); k++) {
-            def file = files[k]
-            echo "  ${file.editType.name} ${file.path}"
-        }
-    }
-  }
-
-  return str
 }
