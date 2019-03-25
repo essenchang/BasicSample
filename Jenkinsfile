@@ -45,6 +45,12 @@ pipeline {
             openTasks(ignoreCase: true, high: 'bug', normal: 'todo')
           }
         }
+        stage('sloc') {
+          steps {
+            sh 'sloccount --duplicates --wide --details **/src > sloccount.sc'
+            sloccountPublish encoding: '', pattern: ''
+          }
+        }
       }
     }
 
