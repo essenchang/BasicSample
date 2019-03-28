@@ -5,12 +5,18 @@ pipeline {
 
     stage('sloc') {
       steps {
-        sh './cloc.sh'
+        sh 'cloc . --xml -report-file cloc.xml --exclude-dir=build,libs,assets,res --include-lang=Java,Kotlin'
+        sh 'sloccount --duplicates --wide --details **/src > sloccount.sc'
+        sloccountPublish encoding: '', pattern: ''
       }
     }
 
 
-
+    stage('cloc sh') {
+      steps {
+        sh './cloc.sh'
+      }
+    }
 
   }
 
