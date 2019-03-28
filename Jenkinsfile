@@ -2,56 +2,12 @@ pipeline {
   agent any
 
   stages {
-    stage('Build APK') {
-      steps {
-        sh './gradlew assemble'
-      }
-    }
 
-    stage('apk') {
+    stage('sloc') {
       steps {
-        archiveArtifacts '**/*.apk'
-      }
-    }
-
-    stage('Static Analytics') {
-      parallel {
-        stage('Lint') {
-          steps {
-            sh './gradlew app:lint'
-            androidLint()
-          }
-        }
-        stage('checkstyle') {
-          steps {
-            sh './gradlew app:checkstyle'
-            checkstyle()
-          }
-        }
-        stage('pmd') {
-          steps {
-            sh './gradlew app:pmd'
-            pmd()
-          }
-        }
-        stage('findbugs') {
-          steps {
-            sh './gradlew app:findbugs'
-            findbugs()
-          }
-        }
-        stage('scan workspace') {
-          steps {
-            openTasks(ignoreCase: true, high: 'bug', normal: 'todo')
-          }
-        }
-        stage('sloc') {
-          steps {
-            sh 'cloc . --xml -report-file cloc.xml --exclude-dir=build,libs,assets,res --include-lang=Java,Kotlin'
-            sh 'sloccount --duplicates --wide --details **/src > sloccount.sc'
-            sloccountPublish encoding: '', pattern: ''
-          }
-        }
+        sh 'cloc . --xml -report-file cloc.xml --exclude-dir=build,libs,assets,res --include-lang=Java,Kotlin'
+        sh 'sloccount --duplicates --wide --details **/src > sloccount.sc'
+        sloccountPublish encoding: '', pattern: ''
       }
     }
 
@@ -198,7 +154,7 @@ def sendEmailExt() {
   emailext mimeType: 'text/html',
   replyTo: 'baikin.fish@gmail.com',
   subject: "${env.JOB_NAME} - Build# ${env.BUILD_NUMBER} - ${currentBuild.result}",
-  to: 'essenchang@gmail.com',
+  to: 'essenchang@cathayholdings.com.tw',
   body: '''
   項目名稱: $PROJECT_NAME<br/>
 
