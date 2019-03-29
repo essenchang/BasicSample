@@ -6,9 +6,9 @@ pipeline {
     stage('sloc') {
       steps {
         echo "sloc"
-        sh '#!/bin/sh -l
+        sh "#!/bin/sh -l
         cloc . --xml -report-file cloc.xml --exclude-dir=build,libs,assets,res --include-lang=Java,Kotlin
-        sloccount --duplicates --wide --details **/src > sloccount.sc'
+        sloccount --duplicates --wide --details **/src > sloccount.sc"
         sloccountPublish encoding: '', pattern: ''
       }
     }
