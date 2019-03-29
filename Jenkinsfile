@@ -6,7 +6,7 @@ pipeline {
     stage('cloc sh') {
       steps {
         echo "cloc.sh"
-        sh './cloc.sh'
+        sh './script/cloc.sh'
       }
     }
 
