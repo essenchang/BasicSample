@@ -10,6 +10,12 @@ pipeline {
       }
     }
 */
+    stage('env') {
+      steps {
+        echo "env"
+        sh "env"
+      }
+    
     stage('sloc') {
       steps {
         echo "sloc"
