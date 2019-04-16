@@ -21,11 +21,22 @@ pipeline {
       steps {
         echo "sloc"
         sh '''#!/bin/sh -l
-        /usr/local/bin/cloc . --xml -report-file cloc.xml --exclude-dir=build,libs,assets,res --include-lang=Java,Kotlin
-        /usr/local/bin/sloccount --duplicates --wide --details **/src > sloccount.sc'''
+        /usr/local/bin/cloc . --xml -report-file cloc.xml --exclude-dir=build,libs,assets,res --include-lang=Java,Kotlin'''
+        
+        // /usr/local/bin/sloccount --duplicates --wide --details **/src > sloccount.sc'''
         //sloccountPublish encoding: '', pattern: ''
       }
     }
+    
+    stage('sloccountPublish') {
+      steps {
+        echo "sloccountPublish"
+        sloccountPublish encoding: '', pattern: 'cloc.xml'
+      }
+    }
+    
+    
+    
 
 
 
