@@ -31,7 +31,7 @@ pipeline {
     stage('sloccountPublish') {
       steps {
         echo "sloccountPublish"
-        sloccountPublish encoding: '', pattern: 'cloc.xml'
+        sloccountPublish encoding: '', pattern: './cloc.xml'
       }
     }
     
