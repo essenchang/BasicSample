@@ -2,14 +2,14 @@ pipeline {
   agent any
 
   stages {
-
+/*
     stage('cloc sh') {
       steps {
         echo "cloc.sh"
         sh './script/cloc.sh'
       }
     }
-
+*/
     stage('sloc') {
       steps {
         echo "sloc"
