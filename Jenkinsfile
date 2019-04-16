@@ -22,8 +22,12 @@ pipeline {
     stage('cloc') {
       steps {
         echo "cloc"
-        sh '/usr/local/bin/cloc --by-file --exclude-dir=build,libs,assets,res --xml --out=build/cloc.xml --include-lang=Java,Kotlin --quiet .';
+        sh '/usr/local/bin/cloc . --by-file --xml -report-file cloc.xml --exclude-dir=build,libs,assets,res --include-lang=Java,Kotlin'
+        
+        // 可以成功的語法
+        //sh '/usr/local/bin/cloc --by-file --exclude-dir=build,libs,assets,res --xml --out=build/cloc.xml --include-lang=Java,Kotlin --quiet .';
     
+        // 一直無法成功的語法
         //sh '/usr/local/bin/cloc . --xml -report-file cloc.xml --exclude-dir=build,libs,assets,res --include-lang=Java,Kotlin'
         
         // /usr/local/bin/sloccount --duplicates --wide --details **/src > sloccount.sc'''
