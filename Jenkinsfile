@@ -15,6 +15,7 @@ pipeline {
         echo "env"
         sh "env"
       }
+    }
     
     stage('sloc') {
       steps {
