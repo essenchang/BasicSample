@@ -10,18 +10,19 @@ pipeline {
       }
     }
 */
+    /*
     stage('env') {
       steps {
         echo "env"
         sh "env"
       }
     }
+    */
     
-    stage('sloc') {
+    stage('cloc') {
       steps {
-        echo "sloc"
-        sh '''#!/bin/sh -l
-        /usr/local/bin/cloc . --xml -report-file cloc.xml --exclude-dir=build,libs,assets,res --include-lang=Java,Kotlin'''
+        echo "cloc"
+        sh '/usr/local/bin/cloc . --xml -report-file cloc.xml --exclude-dir=build,libs,assets,res --include-lang=Java,Kotlin'
         
         // /usr/local/bin/sloccount --duplicates --wide --details **/src > sloccount.sc'''
         //sloccountPublish encoding: '', pattern: ''
@@ -31,7 +32,7 @@ pipeline {
     stage('sloccountPublish') {
       steps {
         echo "sloccountPublish"
-        sloccountPublish encoding: '', pattern: './cloc.xml'
+        sloccountPublish encoding: '', pattern: 'cloc.xml'
       }
     }
     
