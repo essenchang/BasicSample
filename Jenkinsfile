@@ -161,7 +161,7 @@ def sendNotification() {
 def sendSlack() {
   echo "sendSlack"
   // slack.
-  slackSend color: getColorByStatus(), failOnError: false, message: "${env.JOB_NAME} - Build # ${env.BUILD_NUMBER}\nBUILD_URL:${env.BUILD_URL}\n${getChangeLogs()}\n", teamDomain: 'myrewards', token: 'yf7TQbL4E6WfaEt70ldNawTI'
+  slackSend color: getColorByStatus(), failOnError: false, message: "${currentBuild.result} ${env.JOB_NAME} - Build # ${env.BUILD_NUMBER}\nBUILD_URL:${env.BUILD_URL}\n${getChangeLogs()}\n", teamDomain: 'myrewards', token: 'ueMeC706FtJozn9zxnnfvaL4'
 }
 
 /*
@@ -173,8 +173,8 @@ def sendEmailExt() {
   // emailext
   emailext mimeType: 'text/html',
   replyTo: 'baikin.fish@gmail.com',
-  subject: "${env.JOB_NAME} - Build# ${env.BUILD_NUMBER} - ${currentBuild.result}",
-  to: 'essenchang@cathayholdings.com.tw',
+  subject: "${env.JOB_NAME} - Build# ${env.BUILD_NUMBER} - ${currentBuild.result} from Steven.Jenkins",
+  to: 'baikin.fish@gmail.com',
   body: '''
   項目名稱: $PROJECT_NAME<br/>
 
