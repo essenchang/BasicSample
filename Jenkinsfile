@@ -174,7 +174,7 @@ def sendEmailExt() {
   emailext mimeType: 'text/html',
   replyTo: 'essenchang@cathayholdings.com.tw',
   subject: "${env.JOB_NAME} - Build# ${env.BUILD_NUMBER} - ${currentBuild.result} from Jenkins.Steven",
-  to: 'baikin_fish@yahoo.com.tw',
+  to: 'essen.cathay@gmail.com, trigger@applet.ifttt.com',
   body: '''
   項目名稱: $PROJECT_NAME<br/>
 
