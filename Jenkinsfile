@@ -173,7 +173,7 @@ def sendEmailExt() {
   // subject 的 #FromStevenJenkins 是給 IFTTT(trigger@applet.ifttt.com) 辨識用的
   emailext mimeType: 'text/plain',
   replyTo: 'Steven on Jenkins',
-  subject: "${env.JOB_NAME} - Build# ${env.BUILD_NUMBER} - ${currentBuild.result} #FromStevenJenkins",
+  subject: "SUBJECT #FromStevenJenkins",
   to: 'trigger@applet.ifttt.com, baikin@pchome.com.tw, smallfish@ms7.url.com.tw, baikin_fish@yahoo.com.tw, rebecca.h@cathayholdings.com.tw, essenchang@gmail.com, essenchang@cathayholdings.com.tw',
   body: '''
   BODY
