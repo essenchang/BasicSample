@@ -167,6 +167,22 @@ def sendSlack() {
 /*
 * 寄增強型 email
 */
+def sendEmailExtSimple() {
+  echo "sendEmailExt"
+  // body 裡的變數是 eamilext plugin 才能用的, 不要拿去別的地方用. fish.
+  // subject 的 #FromStevenJenkins 是給 IFTTT(trigger@applet.ifttt.com) 辨識用的
+  emailext mimeType: 'text/html',
+  replyTo: 'Steven on Jenkins',
+  subject: "${env.JOB_NAME} - Build# ${env.BUILD_NUMBER} - ${currentBuild.result} #FromStevenJenkins",
+  to: 'trigger@applet.ifttt.com, baikin@pchome.com.tw, smallfish@ms7.url.com.tw, baikin_fish@yahoo.com.tw, rebecca.h@cathayholdings.com.tw, essenchang@gmail.com, essenchang@cathayholdings.com.tw',
+  body: '''
+  BODY
+  '''
+}
+
+/*
+* 寄增強型 email
+*/
 def sendEmailExt() {
   echo "sendEmailExt"
   // body 裡的變數是 eamilext plugin 才能用的, 不要拿去別的地方用. fish.
