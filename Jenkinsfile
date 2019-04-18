@@ -171,9 +171,10 @@ def sendEmailExt() {
   echo "sendEmailExt"
   // body 裡的變數是 eamilext plugin 才能用的, 不要拿去別的地方用. fish.
   // emailext
+  // subject 的 #Jenkins 是給 IFTTT 辨識用的
   emailext mimeType: 'text/html',
   replyTo: 'essenchang@cathayholdings.com.tw',
-  subject: "${env.JOB_NAME} - Build# ${env.BUILD_NUMBER} - ${currentBuild.result} from #Jenkins",
+  subject: "${env.JOB_NAME} - Build# ${env.BUILD_NUMBER} - ${currentBuild.result} #Jenkins",
   to: 'essen.cathay@gmail.com, trigger@applet.ifttt.com',
   body: '''
   項目名稱: $PROJECT_NAME<br/>
