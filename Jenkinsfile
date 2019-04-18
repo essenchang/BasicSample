@@ -161,7 +161,7 @@ def sendNotification() {
 def sendSlack() {
   echo "sendSlack"
   // slack.
-  slackSend color: getColorByStatus(), failOnError: false, message: "${currentBuild.result} ${env.JOB_NAME} - Build # ${env.BUILD_NUMBER}\nBUILD_URL:${env.BUILD_URL}\n${getChangeLogs()}\n", teamDomain: 'dxt-app', token: 'ueMeC706FtJozn9zxnnfvaL4'
+  slackSend color: getColorByStatus(), failOnError: false, message: "${currentBuild.result}\n${env.JOB_NAME} - Build # ${env.BUILD_NUMBER}\nBUILD_URL:${env.BUILD_URL}\n${getChangeLogs()}\n", teamDomain: 'dxt-app', token: 'ueMeC706FtJozn9zxnnfvaL4'
 }
 
 /*
@@ -173,7 +173,7 @@ def sendEmailExt() {
   // emailext
   emailext mimeType: 'text/html',
   replyTo: 'essenchang@cathayholdings.com.tw',
-  subject: "${env.JOB_NAME} - Build# ${env.BUILD_NUMBER} - ${currentBuild.result} from Steven.Jenkins",
+  subject: "${env.JOB_NAME} - Build# ${env.BUILD_NUMBER} - ${currentBuild.result} from Jenkins.Steven",
   to: 'baikin_fish@yahoo.com.tw',
   body: '''
   項目名稱: $PROJECT_NAME<br/>
