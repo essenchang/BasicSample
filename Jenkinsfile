@@ -207,6 +207,7 @@ def sendEmailExt() {
   終端機輸出: <a href="${BUILD_URL}console">${BUILD_URL}console</a><br/><hr/>
 
   變更集: ${JELLY_SCRIPT,template="html"}<br/><hr/>
-  ''',
-  recipientProviders: [developers()]
+  '''
 }
+
+
