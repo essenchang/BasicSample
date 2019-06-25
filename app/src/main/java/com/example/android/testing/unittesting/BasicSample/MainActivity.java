@@ -131,15 +131,5 @@ public class MainActivity extends Activity {
         Toast.makeText(this, "Personal information reverted", Toast.LENGTH_LONG).show();
         Log.i(TAG, "Personal information reverted");
     }
-
-//    public void test() {
-//        // 測試 jenkins 用.
-//        // todo 1
-//        // todo 2
-//        // todo 3
-//        // TODO 4
-//        // bug 1
-//        // bug 2
-//        // BUG 3
-//    }
+    
 }
