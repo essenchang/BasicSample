@@ -132,14 +132,14 @@ public class MainActivity extends Activity {
         Log.i(TAG, "Personal information reverted");
     }
 
-    public void test() {
-        // 測試 jenkins 用.
-        // todo 1
-        // todo 2
-        // todo 3
-        // TODO 4
-        // bug 1
-        // bug 2
-        // BUG 3
-    }
+//    public void test() {
+//        // 測試 jenkins 用.
+//        // todo 1
+//        // todo 2
+//        // todo 3
+//        // TODO 4
+//        // bug 1
+//        // bug 2
+//        // BUG 3
+//    }
 }
