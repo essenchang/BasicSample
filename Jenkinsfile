@@ -2,51 +2,70 @@ pipeline {
   agent any
 
   stages {
-/*
-    stage('cloc sh') {
-      steps {
-        echo "cloc.sh"
-        sh './script/cloc.sh'
-      }
-    }
-*/
-    /*
-    stage('env') {
-      steps {
-        echo "env"
-        sh "env"
-      }
-    }
-    */
-    
-    stage('cloc') {
-      steps {
-        echo "cloc"
-        sh '/usr/local/bin/cloc . --by-file --xml -report-file cloc.xml --exclude-dir=build,libs,assets,res --include-lang=Java,Kotlin'
-        
-        // 可以成功的語法
-        //sh '/usr/local/bin/cloc --by-file --exclude-dir=build,libs,assets,res --xml --out=build/cloc.xml --include-lang=Java,Kotlin --quiet .';
-    
-        // 一直無法成功的語法
-        //sh '/usr/local/bin/cloc . --xml -report-file cloc.xml --exclude-dir=build,libs,assets,res --include-lang=Java,Kotlin'
-        
-        // /usr/local/bin/sloccount --duplicates --wide --details **/src > sloccount.sc'''
-        //sloccountPublish encoding: '', pattern: ''
-      }
-    }
-    
-    stage('sloccountPublish') {
-      steps {
-        echo "sloccountPublish"
-        sloccountPublish encoding: '', pattern: '**/cloc.xml'
-      }
-    }
-    
-    
-    
 
+    // clean.
+    stage('clean') {
+      steps {
+        sh './gradlew clean'
+      }
+    }
+    
+    // 建置apk.
+    stage('建置apk') {
+      steps {
+        sh './gradlew assemble'
+      }
+    }
 
+    // 靜態掃描.
+    stage('靜態分析') {
+      parallel {
 
+        stage('Lint') {
+          steps {
+            sh './gradlew app:lint'
+            androidLint()
+          }
+        }
+
+        stage('checkstyle') {
+          steps {
+            sh './gradlew app:checkstyle'
+            checkstyle()
+          }
+        }
+
+        stage('pmd') {
+          steps {
+            sh './gradlew app:pmd'
+            pmd()
+          }
+        }
+
+        stage('findbugs') {
+          steps {
+            sh './gradlew app:findbugs'
+            findbugs()
+          }
+        }
+
+        stage('scan workspace') {
+          steps {
+            openTasks(ignoreCase: true, high: 'bug', normal: 'todo')
+          }
+        }
+
+        // CLOC.
+        stage('Cloc') {
+          steps {
+            echo "Cloc"
+            sh '/usr/local/bin/cloc . --by-file --xml -report-file cloc.xml --exclude-dir=build,libs,assets,res --include-lang=Java,Kotlin'
+            sloccountPublish encoding: '', pattern: '**/cloc.xml'
+          }
+        }
+
+      }
+    }
 
   }
 
