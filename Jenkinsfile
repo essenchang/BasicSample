@@ -60,14 +60,14 @@ pipeline {
           }
         }
 
-        // CLOC.
-        stage('Cloc') {
-          steps {
-            echo "Cloc"
-            sh '/usr/local/bin/cloc . --by-file --xml -report-file cloc.xml --exclude-dir=build,libs,assets,res --include-lang=Java,Kotlin'
-            sloccountPublish encoding: '', pattern: '**/cloc.xml'
-          }
-        }
+        // // CLOC.
+        // stage('Cloc') {
+        //   steps {
+        //     echo "Cloc"
+        //     sh '/usr/local/bin/cloc . --by-file --xml -report-file cloc.xml --exclude-dir=build,libs,assets,res --include-lang=Java,Kotlin'
+        //     sloccountPublish encoding: '', pattern: '**/cloc.xml'
+        //   }
+        // }
 
       }
     }
