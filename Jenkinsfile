@@ -9,7 +9,7 @@ pipeline {
         sh './gradlew clean'
       }
     }
-    
+
     // 建置apk.
     stage('建置apk') {
       steps {
@@ -24,34 +24,39 @@ pipeline {
         stage('Lint') {
           steps {
             sh './gradlew app:lint'
-            androidLint()
+            //androidLint()
+            androidLint canRunOnFailed: true, defaultEncoding: '', failedNewAll: '15', healthy: '', pattern: '', unHealthy: '', unstableNewAll: '5', useStableBuildAsReference: true
           }
         }
 
         stage('checkstyle') {
           steps {
             sh './gradlew app:checkstyle'
-            checkstyle()
+            //checkstyle()
+            checkstyle canRunOnFailed: true, defaultEncoding: '', failedNewAll: '15', healthy: '', pattern: '', unHealthy: '', unstableNewAll: '5', useStableBuildAsReference: true
           }
         }
 
         stage('pmd') {
           steps {
             sh './gradlew app:pmd'
-            pmd()
+            //pmd()
+            pmd canRunOnFailed: true, defaultEncoding: '', failedNewAll: '15', healthy: '', pattern: '', unHealthy: '', unstableNewAll: '5', useStableBuildAsReference: true
           }
         }
 
         stage('findbugs') {
           steps {
             sh './gradlew app:findbugs'
-            findbugs()
+            //findbugs()
+            findbugs canRunOnFailed: true, defaultEncoding: '', excludePattern: '', failedNewAll: '15', healthy: '', includePattern: '', pattern: '', unHealthy: '', unstableNewAll: '5', useStableBuildAsReference: true
           }
         }
 
         stage('scan workspace') {
           steps {
-            openTasks(ignoreCase: true, high: 'bug', normal: 'todo')
+            //openTasks(ignoreCase: true, high: 'bug', normal: 'todo')
+            openTasks canRunOnFailed: true, defaultEncoding: '', excludePattern: '', failedNewAll: '10', healthy: '', high: 'bug', ignoreCase: true, low: '', normal: 'todo', pattern: '', unHealthy: '', unstableNewAll: '5', useStableBuildAsReference: true
           }
         }
 
@@ -170,8 +175,8 @@ def getChangeLogs() {
 */
 def sendNotification() {
   echo "sendNotification"
-  sendSlack()
-  sendEmailExt()
+  //sendSlack()
+  //sendEmailExt()
 }
 
 /*
@@ -193,7 +198,7 @@ def sendEmailExt() {
   emailext mimeType: 'text/plain',
   replyTo: 'Steven on Jenkins',
   subject: "SUBJECT #FromStevenJenkins",
-  to: 'trigger@applet.ifttt.com, baikin@pchome.com.tw, smallfish@ms7.url.com.tw, baikin_fish@yahoo.com.tw, rebecca.h@cathayholdings.com.tw, essenchang@gmail.com, essenchang@cathayholdings.com.tw',
+  to: 'essenchang@gmail.com',
   body: '''
   BODY
   '''
@@ -203,7 +208,7 @@ def sendEmailExt() {
 * 寄增強型 email
 */
 def sendEmailExtReal() {
-  echo "sendEmailExt"
+  echo "sendEmailExtReal"
   // body 裡的變數是 eamilext plugin 才能用的, 不要拿去別的地方用. fish.
   // subject 的 #FromStevenJenkins 是給 IFTTT(trigger@applet.ifttt.com) 辨識用的
   emailext mimeType: 'text/html',
