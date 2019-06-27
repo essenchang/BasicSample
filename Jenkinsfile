@@ -27,34 +27,34 @@ pipeline {
         stage('Lint') {
           steps {
             sh './gradlew app:lint'
-            androidLint canRunOnFailed: true, defaultEncoding: '', failedNewAll: "${failedLimit}", healthy: '', pattern: '', unHealthy: '', unstableNewAll: "${unstableLimit}", useStableBuildAsReference: true
+            androidLint canRunOnFailed: true, defaultEncoding: '', failedNewAll: failedLimit, healthy: '', pattern: '', unHealthy: '', unstableNewAll: unstableLimit, useStableBuildAsReference: true
           }
         }
 
         stage('checkstyle') {
           steps {
             sh './gradlew app:checkstyle'
-            checkstyle canRunOnFailed: true, defaultEncoding: '', failedNewAll: "${failedLimit}", healthy: '', pattern: '', unHealthy: '', unstableNewAll: "${unstableLimit}", useStableBuildAsReference: true
+            checkstyle canRunOnFailed: true, defaultEncoding: '', failedNewAll: failedLimit, healthy: '', pattern: '', unHealthy: '', unstableNewAll: unstableLimit, useStableBuildAsReference: true
           }
         }
 
         stage('pmd') {
           steps {
             sh './gradlew app:pmd'
-            pmd canRunOnFailed: true, defaultEncoding: '', failedNewAll: "${failedLimit}", healthy: '', pattern: '', unHealthy: '', unstableNewAll: "${unstableLimit}", useStableBuildAsReference: true
+            pmd canRunOnFailed: true, defaultEncoding: '', failedNewAll: failedLimit, healthy: '', pattern: '', unHealthy: '', unstableNewAll: unstableLimit, useStableBuildAsReference: true
           }
         }
 
         stage('findbugs') {
           steps {
             sh './gradlew app:findbugs'
-            findbugs canRunOnFailed: true, defaultEncoding: '', excludePattern: '', failedNewAll: "${failedLimit}", healthy: '', includePattern: '', pattern: '', unHealthy: '', unstableNewAll: "${unstableLimit}", useStableBuildAsReference: true
+            findbugs canRunOnFailed: true, defaultEncoding: '', excludePattern: '', failedNewAll: failedLimit, healthy: '', includePattern: '', pattern: '', unHealthy: '', unstableNewAll: unstableLimit, useStableBuildAsReference: true
           }
         }
 
         stage('scan workspace') {
           steps {
-            openTasks canRunOnFailed: true, defaultEncoding: '', excludePattern: '', failedNewAll: '10', healthy: '', high: 'bug', ignoreCase: true, low: '', normal: 'todo', pattern: '', unHealthy: '', unstableNewAll: "${unstableLimit}", useStableBuildAsReference: true
+            openTasks canRunOnFailed: true, defaultEncoding: '', excludePattern: '', failedNewAll: '10', healthy: '', high: 'bug', ignoreCase: true, low: '', normal: 'todo', pattern: '', unHealthy: '', unstableNewAll: unstableLimit, useStableBuildAsReference: true
           }
         }
 
