@@ -130,6 +130,25 @@ public class MainActivity extends Activity {
         populateUi();
         Toast.makeText(this, "Personal information reverted", Toast.LENGTH_LONG).show();
         Log.i(TAG, "Personal information reverted");
+
+        // todo
+        // bug
+        // todo
+        // bug
+        // todo
+        // bug
+        // todo
+        // bug
+        // todo
+        // bug
+        // todo
+        // bug
+        // todo
+        // bug
+        // todo
+        // bug
+        // todo
+        // bug
     }
-    
+
 }

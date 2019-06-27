@@ -54,7 +54,7 @@ pipeline {
 
         stage('scan workspace') {
           steps {
-            openTasks canRunOnFailed: true, defaultEncoding: '', excludePattern: '', failedNewAll: '10', healthy: '', high: 'bug', ignoreCase: true, low: '', normal: 'todo', pattern: '', unHealthy: '', unstableNewAll: unstableLimit, useStableBuildAsReference: true
+            openTasks canRunOnFailed: true, defaultEncoding: '', excludePattern: '', failedNewAll: failedLimit, healthy: '', high: 'bug', ignoreCase: true, low: 'todo', normal: 'fixme', pattern: '', unHealthy: '', unstableNewAll: unstableLimit, useStableBuildAsReference: true
           }
         }
 
