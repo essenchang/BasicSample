@@ -1,5 +1,5 @@
-def warnLimit = '5'
-def unstableLimit = '15'
+def unstableLimit = '5'
+def failedLimit = '15'
 
 pipeline {
   agent any
