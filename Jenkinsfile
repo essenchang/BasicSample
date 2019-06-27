@@ -1,11 +1,11 @@
+def warnLimit = '5'
+def unstableLimit = '15'
+
 pipeline {
   agent any
 
   stages {
 
-    def warnLimit = '5'
-    def unstableLimit = '15'
-    
     // clean.
     stage('clean') {
       steps {
